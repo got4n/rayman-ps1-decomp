@@ -68,18 +68,16 @@ void videonext(void)
 }
 
 /* E244 80132A44 -O2 -msoft-float */
-#ifndef NONMATCHINGS
-INCLUDE_ASM("asm/nonmatchings/video", PS1_PlayVideoFile);
-#else
-/* score of ??? */
 void PS1_PlayVideoFile(s16 video)
 {
     short sVar1;
     int iVar2;
+    int bits_shift;
     u32 *pbVar3;
     u8 temp_s3;
-    u16 frame_count;
+    u16 frame_count; // ?? not sure if it's worth keeping, seems to change nothing if you remove it but I'm keeping it from the older version
 
+    
     ResetCallback();
     DecDCTReset(0);
     temp_s3 = 1;
@@ -92,33 +90,35 @@ void PS1_PlayVideoFile(s16 video)
         PS1_LoadVideoFile(&PS1_VdoFiles[video].file.pos, 1);
     }
     videosetup(&PS1_CurrentVideoState);
+    bits_shift = video << 16;
     DecDCToutCallback(videonext);
     PutDispEnv(&PS1_CurrentDisplay->field0_0x0);
-    PS1_ReadVideoFile(PS1_CurrentVideoState.encoded_frame_buffers[PS1_CurrentVideoState.current_encode_buffer_index], video);
+    PS1_ReadVideoFile(PS1_CurrentVideoState.encoded_frame_buffers[PS1_CurrentVideoState.current_encode_buffer_index], bits_shift >> 16);
     PS1_CurrentVideoState.vsync_counter = 0;
     while ((PS1_VideoPlayState < 2) && ((u16) PS1_CurrentVideoState.frame_count < PS1_VideoLength))
     {
         PS1_CurrentVideoState.has_swapped_display = 0;
-        if (temp_s3)
+        if (temp_s3) 
         {
             readinput();
         }
         DecDCTout((u32 *) PS1_CurrentVideoState.decoded_frame, 1664);
         DecDCTin(PS1_CurrentVideoState.encoded_frame_buffers[PS1_CurrentVideoState.current_encode_buffer_index], 0);
 
-        if (PS1_CurrentVideoState.current_encode_buffer_index)
+        if (PS1_CurrentVideoState.current_encode_buffer_index) 
         {
             PS1_CurrentVideoState.current_encode_buffer_index = 0;
             pbVar3 = PS1_CurrentVideoState.encoded_frame_buffers[0];
         }
-        else
+        else 
         {
             PS1_CurrentVideoState.current_encode_buffer_index = 1;
             pbVar3 = PS1_CurrentVideoState.encoded_frame_buffers[1];
+            
         }
-        PS1_ReadVideoFile(pbVar3, video);
+        PS1_ReadVideoFile(pbVar3, (video << 16) >> 16);
         if ((temp_s3) &&
-            ((sVar1 = but1pressed(0), sVar1 != 0 || (iVar2 = butstart(0), iVar2 != 0))))
+            ((sVar1 = but1pressed(0), sVar1 != 0 || (iVar2 = butstart(0), iVar2 != 0)))) 
         {
             PS1_VideoPlayState = 2;
         }
@@ -130,10 +130,10 @@ void PS1_PlayVideoFile(s16 video)
     PS1_CurrentVideoState.has_swapped_display = 0;
     DecDCTout((u32 *) PS1_CurrentVideoState.decoded_frame, 1664);
     DecDCTin((u32 *) (&PS1_CurrentVideoState.encoded_frame_buffers[0])[PS1_CurrentVideoState.current_encode_buffer_index], 0);
-    do
+    do 
     {
     } while (PS1_CurrentVideoState.has_swapped_display == 0);
-    do
+    do 
     {
     } while (PS1_CurrentVideoState.vsync_counter != 0);
     DecDCTinCallback(0);
@@ -142,7 +142,7 @@ void PS1_PlayVideoFile(s16 video)
     CdReadyCallback((void *) 0x0);
     VSyncCallback((void *) 0x0);
     iVar2 = 1;
-    do
+    do 
     {
         VSync(0);
         iVar2 = iVar2 + 1;
@@ -154,7 +154,7 @@ void PS1_PlayVideoFile(s16 video)
     }
     return;
 }
-#endif
+
 
 // NOTE: Function name casing is unknown since the name comes from always lowercase hook names in the 30th anniversary edition
 /* E574 80132D74 -O2 -msoft-float */
