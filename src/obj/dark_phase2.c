@@ -480,15 +480,6 @@ block_1:
 #endif
 
 /* 77C64 8019C464 -O2 -msoft-float */
-#ifndef NONMATCHINGS
-INCLUDE_ASM("asm/nonmatchings/obj/dark_phase2", allocate_DARK2_SORT);
-#else
-/*
-score of ???
-attempts: 3
-looked at android
-looked at allocate_DARK_SORT
-*/
 void allocate_DARK2_SORT(s32 param_1, s16 param_2, s16 param_3, s16 param_4)
 {
     Obj *temp_t6;
@@ -567,13 +558,13 @@ void allocate_DARK2_SORT(s32 param_1, s16 param_2, s16 param_3, s16 param_4)
 
     if (check_1 == 0)
         return;
-
+    
+    cur_obj_1->flags |= 0xC00;
     cur_obj_1->x_pos = param_1;
     cur_obj_1->y_pos = param_2;
     cur_obj_1->hit_points = 1;
     cur_obj_1->iframes_timer = param_4;
     cur_obj_1->field23_0x3c = 0;
-    cur_obj_1->flags |= 0xC00;
     set_main_and_sub_etat(cur_obj_1, 0, param_3);
 }
 #endif
