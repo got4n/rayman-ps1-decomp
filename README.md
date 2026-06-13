@@ -34,7 +34,6 @@ Any help with these is greatly appreciated! Feel free to create a PR or open an 
 | src/draw/text_18118.c       | display_text                     | 8013DA5C    | https://decomp.me/scratch/HLz85 | 99.25%     |
 | src/menu/menu_82008.c       | PS1_InitGameOptionsMenu          | 801A6808    | https://decomp.me/scratch/U35Nx | 96.68%     |
 | src/obj/bb1.c               | DO_BBMONT2_COMMAND               | 8017EAA4    | https://decomp.me/scratch/07j9E | 89.38%     |
-| src/obj/dark_phase2.c       | allocate_DARK2_SORT              | 8019C464    | https://decomp.me/scratch/GLrrh | 99.81%     |
 | src/obj/eyes_4BC40.c        | DO_ROLL_EYES                     | 80170440    | https://decomp.me/scratch/NR6Iv | 99.05%     |
 | src/obj/mite.c              | DO_MIT_ATTAK                     | 8016F4FC    | https://decomp.me/scratch/mitn7 | 98.67%     |
 | src/obj/spider_plafond.c    | DO_DARD_PLAFOND_ALWAYS           | 80178938    | https://decomp.me/scratch/SonmS | 92.47%     |
